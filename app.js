@@ -15,7 +15,12 @@ app.use(express.static(__dirname + '/public'));
 
 app.get("/", function(req, res){
   client.smembers("students", function(err, students){
+    if (err) {
+      res.send(err);
+    } else {
+    res.json(students);
     res.render("index", {students:students}); 
+  }
   });
   // res.json();  
 });
@@ -25,6 +30,15 @@ app.post("/create", function(req, res){
   client.sadd("students", student);
   res.redirect("/");
 });
+// $(document).ready(function(){
+//   $.ajax({
+//      url: '/create',
+//      datatype: "jsonp",
+
+//   });
+// });
+
+
 
 //REMOVE ONE
 app.delete("/remove/:student", function(req, res) {
@@ -50,6 +64,36 @@ app.delete("/remove", function(req, res) {
 app.listen(3000, function(){
   console.log("Server Starting");
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -19,24 +19,36 @@ app.get("/", function(req, res){
       res.send(err);
     } else {
     res.json(students);
-    res.render("index", {students:students}); 
+
+    // res.render("index", {students:students});
   }
   });
   // res.json();  
 });
+    // $("#list").append("<p>" + students + "</p>");
 
 app.post("/create", function(req, res){
   var student = req.body.student;
   client.sadd("students", student);
   res.redirect("/");
+   Todo.create({
+            text : req.body.student,
+            done : false
+        }, function(err, student) {
+            // gets and returns all the todos 
+            //after you create another
+            Todo.find(function(err, todos) {
+                res.json(todos);
+            });
+        });
 });
-// $(document).ready(function(){
-//   $.ajax({
-//      url: '/create',
-//      datatype: "jsonp",
+$(document).ready(function(){
+  $.ajax({
+     url: '/create',
+     datatype: "jsonp",
 
-//   });
-// });
+  });
+});
 
 
 
